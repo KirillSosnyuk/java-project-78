@@ -11,6 +11,12 @@ public sealed class BaseSchema<T>
     protected Predicate<T> requiredValidationRule =
             value -> validationRules.isEmpty() || value != null;
 
+    /**
+     * Validates an object using rules from the validationRules map.
+     *
+     * @param value object to validate
+     * @return true if all checks from the schema passed
+     */
     public boolean isValid(T value) {
         if (!requiredValidationRule.test(value)) {
             return false;
