@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class BaseSchema<T> {
+public sealed class BaseSchema<T>
+        permits MapSchema, NumberSchema, StringSchema {
 
     protected final Map<String, Predicate<T>> validationRules = new HashMap<>();
     protected Predicate<T> requiredValidationRule =
