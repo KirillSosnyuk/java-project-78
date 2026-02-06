@@ -43,6 +43,9 @@ class ValidatorTest {
 
         schema.minLength(2);
         assertTrue(schema.isValid("Cat"));
+
+        assertTrue(schema.isValid(null));
+        assertTrue(schema.isValid(""));
     }
 
     @Test
@@ -63,7 +66,6 @@ class ValidatorTest {
 
     @Test
     void testStringComplexChain() {
-        // Тестируем цепочку вызовов
         var v = new Validator();
         var complexSchema = v.string()
                 .required()
@@ -108,7 +110,6 @@ class ValidatorTest {
         assertFalse(rangeSchema.isValid(9));
         assertFalse(rangeSchema.isValid(21));
 
-        // Тест переопределения диапазона
         rangeSchema.range(5, 10);
         assertTrue(rangeSchema.isValid(5));
         assertFalse(rangeSchema.isValid(15));
@@ -184,7 +185,7 @@ class ValidatorTest {
 
 
         Map<String, String> toyCar = new HashMap<>();
-        toyCar.put("model", "M"); // < 3
+        toyCar.put("model", "M");
         toyCar.put("vin", "X1");
         assertFalse(schema.isValid(toyCar));
     }
