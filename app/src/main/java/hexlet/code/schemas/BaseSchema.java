@@ -8,7 +8,8 @@ public sealed class BaseSchema<T>
         permits MapSchema, NumberSchema, StringSchema {
 
     protected final Map<String, Predicate<T>> validationRules = new HashMap<>();
-    protected Predicate<T> requiredValidationRule = value -> true;
+    protected boolean isRequired = false;
+    protected Predicate<T> requiredValidationRule = value -> value != null;
 
     /**
      * Validates an object using rules from the validationRules map.
@@ -18,7 +19,7 @@ public sealed class BaseSchema<T>
      */
     public boolean isValid(T value) {
         if (!requiredValidationRule.test(value)) {
-            return false;
+            return !isRequired;
         }
 
         for (Predicate<T> validationRule : validationRules.values()) {

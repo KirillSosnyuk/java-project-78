@@ -7,8 +7,12 @@ import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema<Map<?, ?>> {
 
-    public MapSchema required() {
+    public MapSchema() {
         requiredValidationRule = Objects::nonNull;
+    }
+
+    public MapSchema required() {
+        this.isRequired = true;
         return this;
     }
 
@@ -27,6 +31,7 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
                 BaseSchema<String> fieldSchema = schemaEntry.getValue();
 
                 String fieldValue = (String) map.get(fieldName);
+
                 if (!fieldSchema.isValid(fieldValue)) {
                     return false;
                 }
